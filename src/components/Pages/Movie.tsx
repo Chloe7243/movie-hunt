@@ -1,0 +1,200 @@
+import { Link, useParams } from "react-router-dom";
+import {
+  useGetCountriesQuery,
+  useGetMovieCastQuery,
+  useGetMovieDetailsQuery,
+  useGetMovieReviewsQuery,
+  useGetMovieTrailersQuery,
+  useGetWatchProvidersQuery,
+} from "../../store/api/api";
+import { IMAGE_BASE_URL } from "../../utils/constants";
+import clsx from "clsx";
+import Card from "../UI/Card";
+import GenreName from "../GenreName";
+import { getDate, modifyNumber, modifyTime } from "../../utils/functions";
+import Loader from "../Loader";
+import StarRatings from "../StarRatings";
+import Dropdown from "../Dropdown";
+import { useState } from "react";
+
+const Movie = () => {
+  const movieId = Number(useParams().id);
+  const [searchCountry, setSearchCountry] = useState("");
+  const { currentData: movieDetails, isFetching: movieDetailsLoading } =
+    useGetMovieDetailsQuery(movieId);
+  const { currentData: movieCast, isFetching: movieCastLoading } =
+    useGetMovieCastQuery(movieId);
+  console.log(movieDetails);
+  const { currentData: movieTrailers, isFetching: movieTrailersLoading } =
+    useGetMovieTrailersQuery(movieId);
+  const { currentData: movieReviews, isFetching: movieReviewsLoading } =
+    useGetMovieReviewsQuery(movieId);
+  // const { currentData: watchProviders, isFetching: watchProvidersLoading } =
+  //   useGetWatchProvidersQuery(movieId);
+  const { currentData: countriesData, isLoading: countriesDataLoading } =
+    useGetCountriesQuery(null);
+
+  const backdrop_path = `${IMAGE_BASE_URL}${movieDetails?.backdrop_path}`;
+  const companies = movieDetails?.production_companies;
+  const infoLoading =
+    movieCastLoading ||
+    movieDetailsLoading ||
+    movieReviewsLoading ||
+    movieTrailersLoading ||
+    countriesDataLoading;
+
+  console.log("CD", countriesData);
+  console.log("MC", movieCast);
+  console.log("MR", movieReviews);
+  console.log("MT", movieTrailers);
+  // console.log("WP", watchProviders);
+
+  const countries = countriesData?.filter((c: any) =>
+    c.native_name.toLowerCase().includes(searchCountry)
+  );
+
+  return infoLoading ? (
+    <Loader />
+  ) : (
+    <>
+      <div
+        className={clsx(
+          `h-[100svh]  w-screen relative !flex text-white items-end`
+        )}
+        style={{
+          backgroundImage: `url(${backdrop_path})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "#00000099",
+          backgroundBlendMode: "overlay",
+        }}
+      >
+        <div className="md:px-10 px-6 py-8 z-40">
+          <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl leading-none font-extrabold overflow-y-hidden">
+            {movieDetails?.title || movieDetails?.name}
+          </h1>
+          <p className="font-didact_gothic mt-7 max-sm:text-base max-md:text-lg">
+            {movieDetails?.tagline}
+          </p>
+          <div className="mt-4 flex gap-4 flex-wrap overflow-scroll">
+            {movieDetails?.genres.map((genre: any, i: number) => (
+              <GenreName key={i} id={genre.id} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="md:px-10 px-6 py-12 flex flex-wrap gap-10 ">
+        <div className="lg:max-w-[50%] z-[999] bg-[#0b0c0f]">
+          <h3 className="font-bold md:text-xl lg:text-2xl capitalize">
+            Details
+          </h3>
+          <div className="md:px-4 pt-4 flex flex-col gap-4 text-lg bg-inherit">
+            <p className="">{movieDetails?.overview}</p>
+            <div className="flex gap-2">
+              <b>Ratings:</b>
+              <div className="text-sm">
+                <StarRatings ratings={movieDetails?.vote_average / 2} />
+                <span className="flex justify-between gap-4 pl-2 pr-[.2rem]">
+                  <p>{(movieDetails?.vote_average / 2).toPrecision(3)} / 5</p>
+                  <p>({modifyNumber(movieDetails?.vote_count)})</p>
+                </span>
+              </div>
+            </div>
+            <p>
+              <b>Runtime:</b> {modifyTime(movieDetails?.runtime)}
+            </p>
+
+            <p>
+              <b>Release date:</b> {getDate(movieDetails?.release_date)}
+            </p>
+            <div className="flex gap-2">
+              <p className="min-w-fit">
+                <b>Produced by: </b>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {companies?.map((company: any) =>
+                  company.logo_path ? (
+                    <img
+                      src={`${IMAGE_BASE_URL}${company.logo_path}`}
+                      className="h-6"
+                      alt=""
+                    />
+                  ) : (
+                    <p>{company.name}</p>
+                  )
+                )}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <p className="min-w-fit ">
+                <b>Where to watch?</b>
+              </p>
+
+              <Dropdown>
+                <div className="w-full px-4 sticky top-0  bg-gray-700 pb-1.5">
+                  <input
+                    type="search"
+                    className="p-1.5 w-full text-black rounded-lg focus:outline-none"
+                    onChange={(e) =>
+                      setSearchCountry(e.target.value.toLowerCase())
+                    }
+                  />
+                </div>
+
+                {countries.length ? (
+                  countries.map(
+                    ({
+                      iso_3166_1: cc,
+                      native_name: name,
+                    }: {
+                      iso_3166_1: string;
+                      native_name: string;
+                    }) => {
+                      return (
+                        <li>
+                          <a
+                            href={`https://www.themoviedb.org/movie/${movieId}/watch?locale=${cc}`}
+                            className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          >
+                            <img
+                              src={`https://flagsapi.com/${cc}/flat/32.png`}
+                            />
+                            <p>{name}</p>
+                          </a>
+                        </li>
+                      );
+                    }
+                  )
+                ) : (
+                  <p className="text-center pb-2"><b>No country found!</b></p>
+                )}
+              </Dropdown>
+            </div>
+          </div>
+        </div>
+
+        <div className="">
+          <h3 className="font-bold md:text-xl lg:text-2xl capitalize">
+            reviews
+          </h3>
+        </div>
+        <div className="min-w-full">
+          <h3 className="font-bold md:text-xl lg:text-2xl capitalize">
+            trailers
+          </h3>
+        </div>
+        <div className="min-w-full">
+          <h3 className="font-bold md:text-xl lg:text-2xl capitalize">cast</h3>
+        </div>
+        <div>
+          <h3 className="font-bold md:text-xl lg:text-2xl capitalize">
+            You may also like
+          </h3>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Movie;
