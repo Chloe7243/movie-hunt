@@ -3,7 +3,6 @@ const StarRatings = ({ ratings }: { ratings: number }) => {
   const yellowStars = [];
   ratings = ratings > 5 ? 5 : ratings;
     const roundedRatings = Math.ceil(ratings);
-    console.log(roundedRatings)
   for (let i = 0; i < roundedRatings; i++) {
     yellowStars.push(
       i === roundedRatings - 1

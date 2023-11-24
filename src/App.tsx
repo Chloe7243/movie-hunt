@@ -14,13 +14,15 @@ import Watchlist from "./components/Pages/Watchlist";
 import UserProfile from "./components/Pages/UserProfile";
 
 import "./App.css";
+import Login from "./components/Pages/Login";
+import SignUp from "./components/Pages/SignUp";
 
 function App() {
   return (
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-          <Route index path="home" element={<Home />} />
+          <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
           <Route path="movies/:id" element={<Movie />} />
           <Route path="tv-shows" element={<TvShows />} />
@@ -29,6 +31,8 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="user-profile" element={<UserProfile />} />
         </Route>
+        {/* <Route path="login" element={<Login />} />
+        <Route path="sign-up" element={<SignUp />} /> */}
       </Routes>
     </Provider>
   );

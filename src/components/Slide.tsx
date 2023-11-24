@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IMAGE_BASE_URL, MEDIA_LINKS } from "../utils/constants";
 import GenreName from "./GenreName";
 
-const Slide = ({ item }: { item: any }) => {
+const Slide = ({ item, showType, type }: { item: any, showType?:boolean, type?:string }) => {
   const backdrop_path = `${IMAGE_BASE_URL}${item?.backdrop_path}`;
 
   return (
@@ -28,13 +28,13 @@ const Slide = ({ item }: { item: any }) => {
           {item?.overview}
         </p>
         <div className="mt-4 flex gap-4 capitalize overflow-scroll">
-          <Card>{item?.media_type}</Card>
+          {showType && <Card>{item?.media_type}</Card>}
           {item.genre_ids.map((genre_id: number, i: number) => (
             <GenreName key={i} id={genre_id} />
           ))}
 
           <Card className="!bg-black/30 py-3 font-semibold text-white">
-            <Link to={`/${MEDIA_LINKS[item?.media_type]}/${item?.id}`}>
+            <Link to={`/${MEDIA_LINKS[item?.media_type || type]}/${item?.id}`}>
               View more details
             </Link>
           </Card>

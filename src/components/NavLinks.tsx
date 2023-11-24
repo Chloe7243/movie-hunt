@@ -9,7 +9,7 @@ const NavLinks = () => {
 
   return (
     <nav className="flex gap-4 text-white capitalize font-montserrat p-4 flex-wrap items-center justify-center">
-      <NavLink to="/home" className={({ isActive }) => navlinkStyle(isActive)}>
+      <NavLink to="/" className={({ isActive }) => navlinkStyle(isActive)}>
         home
       </NavLink>
       <NavLink
@@ -24,12 +24,12 @@ const NavLinks = () => {
       >
         tv shows
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/watchlist"
         className={({ isActive }) => navlinkStyle(isActive)}
       >
         watchlist
-      </NavLink>
+      </NavLink> */}
     </nav>
   );
 };

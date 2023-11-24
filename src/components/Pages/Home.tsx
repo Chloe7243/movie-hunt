@@ -50,7 +50,7 @@ const Home = () => {
         ) : (
           <Slider {...settings}>
             {trendingData?.results?.slice(0, 5).map((item: any, i: number) => (
-              <Slide key={i} item={item} />
+              <Slide key={i} item={item} showType />
             ))}
           </Slider>
         )}

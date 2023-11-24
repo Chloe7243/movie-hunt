@@ -14,9 +14,9 @@ const Navbar = () => {
         <Link to="/search">
           <IoSearch />
         </Link>
-        <Link to="/user-profile">
+        <button>
           <PiUserCircleFill />
-        </Link>
+        </button>
       </div>
     </div>
   );

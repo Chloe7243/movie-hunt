@@ -61,7 +61,7 @@ const MultiCardSlider = ({ data, type }: { data: any; type?: string }) => {
   return (
     <Slider {...settings} className="lg:px-12 sm:px-6 w-full">
       {data?.map((item: any, i: number) => (
-        <MultiCardSlide key={i} item={item} type={type}  />
+        <MultiCardSlide key={i} item={item} type={type} />
       ))}
     </Slider>
   );

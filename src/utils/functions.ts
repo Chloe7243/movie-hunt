@@ -5,7 +5,6 @@ export const getDateYear = (date: string) => {
 
 export const getDate = (date: string) => {
   const dateValue = new Date(date);
-  console.log(dateValue);
   return dateValue.toLocaleDateString("en-us", {
     day: "2-digit",
     year: "numeric",
@@ -38,3 +37,6 @@ export const modifyNumber = (data: number): string => {
   }
 };
 
+export const modifyString = (str: string) => {
+  return str.length > 550 ? str.substring(0, 550) + "..." : str
+}

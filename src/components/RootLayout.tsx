@@ -8,9 +8,7 @@ import Loader from "./Loader";
 import { useEffect } from "react";
 
 const RootLayout = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const location = useLocation().pathname;
 
   const { currentData: TvGenres, isFetching: tvGenresDataLoading } =
     useGetTvGenresQuery(null);
@@ -22,10 +20,6 @@ const RootLayout = () => {
     dispatch(setGenres(allGenres));
 
   const loading = tvGenresDataLoading || movieGenresDataLoading;
-
-  useEffect(() => {
-    if (location === "/") navigate("/home");
-  }, [location]);
 
   return (
     <div className={`relative flex flex-col  ${loading ? "h-[100svh]" : ""}`}>
