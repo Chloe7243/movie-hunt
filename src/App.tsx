@@ -14,8 +14,8 @@ import Watchlist from "./components/Pages/Watchlist";
 import UserProfile from "./components/Pages/UserProfile";
 
 import "./App.css";
-import Login from "./components/Pages/Login";
-import SignUp from "./components/Pages/SignUp";
+// import Login from "./components/Pages/Login";
+// import SignUp from "./components/Pages/SignUp";
 
 function App() {
   return (

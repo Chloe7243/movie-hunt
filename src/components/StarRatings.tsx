@@ -35,6 +35,7 @@ const StarRatings = ({ ratings }: { ratings: number }) => {
       })}
 
       {greyStars.map((n, i) => {
+        n
         return (
           <svg
             width="30"

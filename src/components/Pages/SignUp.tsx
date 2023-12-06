@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../Logo";
-import bg from "/background.webp";
-import { IoIosClose } from "react-icons/io";
 import clsx from "clsx";
-import { useEffect } from "react";
 
 const SignUp = () => {
   const deviceWidth = window.innerWidth;

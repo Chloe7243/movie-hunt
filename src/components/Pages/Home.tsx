@@ -27,19 +27,19 @@ const Home = () => {
   const {
     currentData: trendingData,
     isLoading: trendingDataLoading,
-    isError: trendingDataError,
+    // isError: trendingDataError,
   } = useGetAllTrendingQuery("day");
 
   const {
     currentData: upcomingMoviesData,
     isLoading: upcomingMoviesDataLoading,
-    isError: upcomingMoviesDataError,
+    // isError: upcomingMoviesDataError,
   } = useGetUpcomingMoviesQuery(null);
 
   const {
     currentData: tvAiringTodayData,
     isLoading: tvAiringTodayDataLoading,
-    isError: tvAiringTodayDataError,
+    // isError: tvAiringTodayDataError,
   } = useGetAiringTvQuery(null);
 
   return (

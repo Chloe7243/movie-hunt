@@ -27,19 +27,19 @@ const TvShows = () => {
   const {
     currentData: popularData,
     isLoading: popularDataLoading,
-    isError: popularDataError,
+    // isError: popularDataError,
   } = useGetPopularTvQuery(null);
 
   const {
     currentData: topRatedData,
     isLoading: topRatedDataLoading,
-    isError: topRatedDataError,
+    // isError: topRatedDataError,
   } = useGetTopRatedTvQuery(null);
 
   const {
     currentData: tvOnAirData,
     isLoading: tvOnAirDataLoading,
-    isError: tvOnAirDataError,
+    // isError: tvOnAirDataError,
   } = useGetTvOnTheAirQuery(null);
 
   return (

@@ -28,25 +28,25 @@ const Movies = () => {
   const {
     currentData: popularData,
     isLoading: popularDataLoading,
-    isError: popularDataError,
+    // isError: popularDataError,
   } = useGetPopularMoviesQuery(null);
 
   const {
     currentData: upcomingMoviesData,
     isLoading: upcomingMoviesDataLoading,
-    isError: upcomingMoviesDataError,
+    // isError: upcomingMoviesDataError,
   } = useGetUpcomingMoviesQuery(null);
 
   const {
     currentData: topRatedData,
     isLoading: topRatedDataLoading,
-    isError: topRatedDataError,
+    // isError: topRatedDataError,
   } = useGetTopRatedMoviesQuery(null);
 
   const {
     currentData: nowPlayingData,
     isLoading: nowPlayingDataLoading,
-    isError: nowPlayingDataError,
+    // isError: nowPlayingDataError,
   } = useGetNowPlayingMoviesQuery(null);
 
   return (

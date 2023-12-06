@@ -1,11 +1,10 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { useGetMoviesGenresQuery, useGetTvGenresQuery } from "../store/api/api";
+import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks/hooks";
 import { setGenres } from "../store/features/genreSlice";
+import { useGetMoviesGenresQuery, useGetTvGenresQuery } from "../store/api/api";
 import Loader from "./Loader";
-import { useEffect } from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();

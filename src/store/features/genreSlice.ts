@@ -5,7 +5,8 @@ const genreSlice = createSlice({
   initialState: new Array<genreObject>(),
   reducers: {
     setGenres(state, { payload }: { payload: genreObject[] }) {
-      return state = payload;
+      state = payload;
+      return state;
     },
   },
 });
