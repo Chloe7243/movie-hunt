@@ -1,7 +1,6 @@
 import store from "./store/store";
 import { Provider } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { useAppSelector } from "./store/hooks/hooks";
 
 import Home from "./pages/Home";
 import Movie from "./pages/Movie";
@@ -15,8 +14,8 @@ import UserProfile from "./pages/UserProfile";
 import RootLayout from "./layouts/RootLayout";
 
 import "./App.css";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+// import Login from "./pages/Login";
+// import SignUp from "./pages/SignUp";
 
 function App() {
   return (
