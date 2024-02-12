@@ -5,12 +5,12 @@ import {
   useGetPopularTvQuery,
   useGetTopRatedTvQuery,
   useGetTvOnTheAirQuery,
-} from "../../store/api/api";
+} from "../store/api/api";
 
-import Slide from "../Slide";
-import Loader from "../Loader";
-import Category from "../UI/Category";
-import MultiCardSlider from "../MultiCardSlider";
+import Slide from "../components/UI/Slide";
+import Loader from "../components/UI/Loader";
+import Category from "../components/UI/Category";
+import MultiCardSlider from "../components/UI/MultiCardSlider";
 
 const TvShows = () => {
   const settings = {
@@ -49,9 +49,12 @@ const TvShows = () => {
           <Loader />
         ) : (
           <Slider {...settings}>
-            {topRatedData?.results?.slice(0, 5).map((item: any, i: number) => (
-              <Slide key={i} item={item} type="tv" />
-            ))}
+            {topRatedData?.results
+              ?.filter((item: any) => item.backdrop_path)
+              ?.slice(0, 5)
+              .map((item: any, i: number) => (
+                <Slide key={i} item={item} type="tv" />
+              ))}
           </Slider>
         )}
       </div>
@@ -65,19 +68,34 @@ const TvShows = () => {
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Top rated Shows
               </h3>
-              <MultiCardSlider data={topRatedData?.results} type="tv" />
+              <MultiCardSlider
+                data={topRatedData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
+                type="tv"
+              />
             </Category>
             <Category>
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Popular Shows
               </h3>
-              <MultiCardSlider data={popularData?.results} type="tv" />
+              <MultiCardSlider
+                data={popularData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
+                type="tv"
+              />
             </Category>
             <Category>
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Shows On air
               </h3>
-              <MultiCardSlider data={tvOnAirData?.results} type="tv" />
+              <MultiCardSlider
+                data={tvOnAirData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
+                type="tv"
+              />
             </Category>
           </>
         )}

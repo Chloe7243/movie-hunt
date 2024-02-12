@@ -4,14 +4,18 @@ import {
   useLazySearchAllQuery,
   useLazySearchMovieQuery,
   useLazySearchShowQuery,
-} from "../../store/api/api";
-import Loader from "../Loader";
-import MultiCardSlide from "../MultiCardSlide";
+} from "../store/api/api";
+import Loader from "../components/UI/Loader";
+import MultiCardSlide from "../components/UI/MultiCardSlide";
 
 const Search = () => {
+  const minYear = 1950;
+  const maxYear = new Date().getFullYear() + 1;
+  const [year, setYear] = useState(minYear);
   const [mediaType, setMediaType] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [adultContent, setAdultContent] = useState(false);
+  const [searchByYear, setSearchByYear] = useState(false);
 
   const adultContentHandler = () => setAdultContent((prev) => !prev);
   const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -37,9 +41,15 @@ const Search = () => {
       include_adult: adultContent,
     };
     if (mediaType === "movie") {
-      searchMovies(searchParams);
+      searchMovies({
+        ...searchParams,
+        primary_release_year: searchByYear ? year.toString() : undefined,
+      });
     } else if (mediaType === "tv") {
-      searchShows(searchParams);
+      searchShows({
+        ...searchParams,
+        first_air_date_year: searchByYear ? year.toString() : undefined,
+      });
     } else {
       searchAll(searchParams);
     }
@@ -61,9 +71,8 @@ const Search = () => {
 
   useEffect(() => {
     searchContent();
-  }, [adultContent, mediaType]);
-;
-
+  }, [adultContent, mediaType, searchByYear, year]);
+  console.log({ data, year });
   return (
     <div className="mt-24 py-8 px-10 flex flex-col gap-10">
       <div>
@@ -84,15 +93,37 @@ const Search = () => {
           </button>
         </div>
         <div className="flex justify-between gap-4 px-2 py-4">
-          <span className="flex items-center gap-2">
-            <input
-              name="adult"
-              type="checkbox"
-              onChange={adultContentHandler}
-              checked={adultContent}
-            />
-            <label htmlFor="adult">Include adult content</label>
-          </span>
+          <div className="flex gap-8">
+            {mediaType != "all" && (
+              <span className="flex gap-4 items-center">
+                <input
+                  name="adult"
+                  type="checkbox"
+                  onChange={() => setSearchByYear((prev) => !prev)}
+                  checked={searchByYear}
+                />
+                <label htmlFor="">Search by year of release</label>
+                <input
+                  className="outline text-black px-1"
+                  type="number"
+                  min={minYear}
+                  max={maxYear}
+                  value={year}
+                  onChange={(e) => setYear(+e.target.value)}
+                  disabled={!searchByYear}
+                />
+              </span>
+            )}
+            <span className="flex items-center gap-2">
+              <input
+                name="adult"
+                type="checkbox"
+                onChange={adultContentHandler}
+                checked={adultContent}
+              />
+              <label htmlFor="adult">Include adult content</label>
+            </span>
+          </div>
           <div className="flex gap-4">
             <div className="flex items-center gap-2 pl-2">
               <input
@@ -136,16 +167,20 @@ const Search = () => {
             No result found <RiEmotionSadLine />
           </h1>
         ) : (
-          data?.map((item: any, i: number) => {
-            return (
-              <MultiCardSlide
-                className="max-w-[15rem]"
-                type={mediaType}
-                key={i}
-                item={item}
-              />
-            );
-          })
+          data
+            ?.filter(
+              (item: any) => item.media_type !== "person" && item.backdrop_path
+            )
+            ?.map((item: any, i: number) => {
+              return (
+                <MultiCardSlide
+                  className="max-w-[15rem]"
+                  type={mediaType}
+                  key={i}
+                  item={item}
+                />
+              );
+            })
         )}
       </div>
     </div>

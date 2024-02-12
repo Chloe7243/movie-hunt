@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { PiUserCircleFill } from "react-icons/pi";
 
-import Logo from "./Logo";
-import NavLinks from "./NavLinks";
+import Logo from "./UI/Logo";
+import NavLinks from "./UI/NavLinks";
 
 const Navbar = () => {
   return (

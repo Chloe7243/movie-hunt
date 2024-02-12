@@ -6,12 +6,12 @@ import {
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
   useGetNowPlayingMoviesQuery,
-} from "../../store/api/api";
+} from "../store/api/api";
 
-import Slide from "../Slide";
-import Loader from "../Loader";
-import Category from "../UI/Category";
-import MultiCardSlider from "../MultiCardSlider";
+import Slide from "../components/UI/Slide";
+import Loader from "../components/UI/Loader";
+import Category from "../components/UI/Category";
+import MultiCardSlider from "../components/UI/MultiCardSlider";
 
 const Movies = () => {
   const settings = {
@@ -56,9 +56,12 @@ const Movies = () => {
           <Loader />
         ) : (
           <Slider {...settings}>
-            {popularData?.results?.slice(0, 5).map((item: any, i: number) => (
-              <Slide key={i} item={item} type="movie" />
-            ))}
+            {popularData?.results
+              ?.filter((item: any) => item.backdrop_path)
+              ?.slice(0, 5)
+              .map((item: any, i: number) => (
+                <Slide key={i} item={item} type="movie" />
+              ))}
           </Slider>
         )}
       </div>
@@ -74,26 +77,43 @@ const Movies = () => {
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Now Playing
               </h3>
-              <MultiCardSlider data={nowPlayingData?.results} type="movie" />
+              <MultiCardSlider
+                data={nowPlayingData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
+                type="movie"
+              />
             </Category>
             <Category>
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Popular
               </h3>
-              <MultiCardSlider data={popularData?.results} type="movie" />
+              <MultiCardSlider
+                data={popularData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
+                type="movie"
+              />
             </Category>
             <Category>
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Top rated
               </h3>
-              <MultiCardSlider data={topRatedData?.results} type="movie" />
+              <MultiCardSlider
+                data={topRatedData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
+                type="movie"
+              />
             </Category>
             <Category>
               <h3 className="font-bold md:text-xl lg:text-2xl px-4 sm:px-0 capitalize">
                 Upcoming
               </h3>
               <MultiCardSlider
-                data={upcomingMoviesData?.results}
+                data={upcomingMoviesData?.results?.filter(
+                  (item: any) => item.backdrop_path
+                )}
                 type="movie"
               />
             </Category>

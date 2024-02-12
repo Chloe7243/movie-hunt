@@ -63,11 +63,11 @@ input[type="checkbox"] {
   border: 1px solid #fff;
   background-color: transparent;
   position: relative;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
 }
 
 input[type="checkbox"]:checked::before {
-  content: '✔️';
+  content: "✔️";
   display: block;
   border-radius: inherit;
   position: absolute;
@@ -82,3 +82,17 @@ input[type="checkbox"]:checked::before {
 input[type="radio"]:checked {
   scale: 1.1;
 }
+
+.slick-track {
+  display: flex;
+  align-items: flex-end;
+  height: max-content;
+}
+
+/* .slick-track > div,
+.slick-track > div > div,
+.slick-track > div > div > div {
+  display: flex;
+  height: 100%;
+  flex: 1;
+} */

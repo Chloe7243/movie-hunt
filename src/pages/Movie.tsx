@@ -1,49 +1,51 @@
 import { useParams } from "react-router-dom";
 import {
   useGetCountriesQuery,
-  useGetTvCastQuery,
-  useGetTvDetailsQuery,
-  useGetTvReviewsQuery,
-  useGetTvTrailersQuery,
-  useGetSimilarShowsQuery,
-} from "../../store/api/api";
-import { IMAGE_BASE_URL } from "../../utils/constants";
+  useGetMovieCastQuery,
+  useGetMovieDetailsQuery,
+  useGetMovieReviewsQuery,
+  useGetMovieTrailersQuery,
+  useGetSimilarMoviesQuery,
+} from "../store/api/api";
+import { IMAGE_BASE_URL } from "../utils/constants";
 import clsx from "clsx";
-import GenreName from "../GenreName";
+import GenreName from "../components/UI/GenreName";
 import {
+  getDate,
   modifyNumber,
   modifyString,
-} from "../../utils/functions";
-import Loader from "../Loader";
-import StarRatings from "../StarRatings";
-import Dropdown from "../Dropdown";
+  modifyTime,
+} from "../utils/functions";
+import Loader from "../components/UI/Loader";
+import StarRatings from "../components/UI/StarRatings";
+import Dropdown from "../components/UI/Dropdown";
 import { useState } from "react";
-import MultiCardSlider from "../MultiCardSlider";
+import MultiCardSlider from "../components/UI/MultiCardSlider";
 
-const TvShow = () => {
-  const tvShowId = Number(useParams().id);
+const Movie = () => {
+  const movieId = Number(useParams().id);
   const [searchCountry, setSearchCountry] = useState("");
-  const { currentData: showDetails, isFetching: showDetailsLoading } =
-    useGetTvDetailsQuery(tvShowId);
-  const { currentData: showCast, isFetching: showCastLoading } =
-    useGetTvCastQuery(tvShowId);
-  const { currentData: showTrailers, isFetching: showTrailersLoading } =
-    useGetTvTrailersQuery(tvShowId);
-  const { currentData: showReviews, isFetching: showReviewsLoading } =
-    useGetTvReviewsQuery(tvShowId);
-  const { currentData: similarShows, isFetching: similarShowsLoading } =
-    useGetSimilarShowsQuery(tvShowId);
+  const { currentData: movieDetails, isFetching: movieDetailsLoading } =
+    useGetMovieDetailsQuery(movieId);
+  const { currentData: movieCast, isFetching: movieCastLoading } =
+    useGetMovieCastQuery(movieId);
+  const { currentData: movieTrailers, isFetching: movieTrailersLoading } =
+    useGetMovieTrailersQuery(movieId);
+  const { currentData: movieReviews, isFetching: movieReviewsLoading } =
+    useGetMovieReviewsQuery(movieId);
+  const { currentData: similarMovies, isFetching: similarMoviesLoading } =
+    useGetSimilarMoviesQuery(movieId);
   const { currentData: countriesData, isLoading: countriesDataLoading } =
     useGetCountriesQuery(null);
 
-  const backdrop_path = `${IMAGE_BASE_URL}${showDetails?.backdrop_path}`;
-  const companies = showDetails?.production_companies;
+  const backdrop_path = `${IMAGE_BASE_URL}${movieDetails?.backdrop_path}`;
+  const companies = movieDetails?.production_companies;
   const infoLoading =
-    showCastLoading ||
-    showDetailsLoading ||
-    showReviewsLoading ||
-    showTrailersLoading ||
-    similarShowsLoading ||
+    movieCastLoading ||
+    movieDetailsLoading ||
+    movieReviewsLoading ||
+    movieTrailersLoading ||
+    similarMoviesLoading ||
     countriesDataLoading;
 
   const countries = countriesData?.filter((c: any) =>
@@ -69,14 +71,14 @@ const TvShow = () => {
         }}
       >
         <div className="md:px-10 px-6 py-8 z-40">
-          <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl leading-none font-extrabold overflow-y-hidden">
-            {showDetails?.title || showDetails?.name}
+          <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl leading-none font-extrabold max-h-[20rem]">
+            {movieDetails?.title || movieDetails?.name}
           </h1>
           <p className="font-didact_gothic mt-7 max-sm:text-base max-md:text-lg">
-            {showDetails?.tagline}
+            {movieDetails?.tagline}
           </p>
           <div className="mt-4 flex gap-4 flex-wrap overflow-scroll">
-            {showDetails?.genres.map((genre: any, i: number) => (
+            {movieDetails?.genres.map((genre: any, i: number) => (
               <GenreName key={i} id={genre.id} />
             ))}
           </div>
@@ -89,24 +91,25 @@ const TvShow = () => {
             Details
           </h3>
           <div className="md:px-4 pt-4 flex flex-col gap-4 text-lg bg-inherit">
-            <p className="">{showDetails?.overview}</p>
+            <p className="">{movieDetails?.overview}</p>
             <div className="flex gap-2">
               <b>Ratings:</b>
               <div className="text-sm">
-                <StarRatings ratings={showDetails?.vote_average / 2} />
+                <StarRatings ratings={movieDetails?.vote_average / 2} />
                 <span className="flex justify-between gap-4 pl-2 pr-[.2rem]">
-                  <p>{(showDetails?.vote_average / 2).toPrecision(3)} / 5</p>
-                  <p>({modifyNumber(showDetails?.vote_count)})</p>
+                  <p>{(movieDetails?.vote_average / 2).toPrecision(3)} / 5</p>
+                  <p>({modifyNumber(movieDetails?.vote_count)})</p>
                 </span>
               </div>
             </div>
             <p>
-              <b>Number of seasons:</b> {`${showDetails?.number_of_seasons}`}
+              <b>Runtime:</b> {modifyTime(movieDetails?.runtime)}
             </p>
+
             <p>
-              <b>Number of episodes:</b> {`${showDetails?.number_of_episodes}`}
+              <b>Release date:</b> {getDate(movieDetails?.release_date)}
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <p className="min-w-fit">
                 <b>Produced by: </b>
               </p>
@@ -126,7 +129,7 @@ const TvShow = () => {
                 )}
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <p className="min-w-fit ">
                 <b>Where to watch?</b>
               </p>
@@ -154,7 +157,7 @@ const TvShow = () => {
                       return (
                         <li>
                           <a
-                            href={`https://www.themoviedb.org/tv/${tvShowId}/watch?locale=${cc}`}
+                            href={`https://www.themoviedb.org/movie/${movieId}/watch?locale=${cc}`}
                             target="_blank"
                             className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                           >
@@ -177,21 +180,21 @@ const TvShow = () => {
           </div>
         </div>
 
-        <div className="">
+        <div className="lg:w-[45%]">
           <h3 className="font-bold md:text-xl lg:text-2xl capitalize pb-4">
             reviews
           </h3>
-          <div className=" max-h-[25rem] h-max">
-            {!showReviews?.total_results ? (
+          <div className=" max-h-[23rem] h-max">
+            {!movieReviews?.total_results ? (
               <p className="w-full text-center text-xl p-4 font-extrabold">
                 No reviews yet
               </p>
             ) : (
               <div className="flex flex-col gap-8">
-                {showReviews?.results.slice(0, 5).map((review: any) => {
+                {movieReviews?.results.slice(0, 5).map((review: any) => {
                   const comment = modifyString(review.content);
                   return (
-                    <div className="w-[30rem] shrink-0">
+                    <div className="w-full  shrink-0">
                       <p className="text-xl pb-2">
                         <b>{review.author}:</b>
                       </p>
@@ -200,8 +203,8 @@ const TvShow = () => {
                         {comment != review.content ? (
                           <a
                             href={`https://www.themoviedb.org/review/${review.id}`}
-                            className="text-blue-800"
                             target="_blank"
+                            className="text-blue-800"
                           >
                             read more
                           </a>
@@ -212,10 +215,11 @@ const TvShow = () => {
                     </div>
                   );
                 })}
-                {showReviews?.total_results > 5 && (
+                {movieReviews?.total_results > 5 && (
                   <p className="text-xl text-center w-full text-gray-400 font-bold">
                     <a
-                      href={`https://www.themoviedb.org/tv/${tvShowId}/reviews`}
+                      href={`https://www.themoviedb.org/movie/${movieId}/reviews`}
+                      className=""
                       target="_blank"
                     >
                       View more reviews
@@ -232,7 +236,7 @@ const TvShow = () => {
             Trailers & Teasers
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-4  p-4 justify-center">
-            {showTrailers?.results
+            {movieTrailers?.results
               ?.filter(
                 (video: any) =>
                   video.type === "Teaser" || video.type === "Trailer"
@@ -255,35 +259,58 @@ const TvShow = () => {
         </div>
         <div className="min-w-full">
           <h3 className="font-bold md:text-xl lg:text-2xl capitalize">cast</h3>
-          <div className="flex gap-4 flex-wrap mx-auto justify-center py-8 ">
-            {Object.values(showCast?.cast)
-              .slice(0, 10)
-              .map((person: any) => (
-                <div className="flex flex-col w-max items-center">
-                  <img
-                    src={`${IMAGE_BASE_URL}${person?.profile_path}`}
-                    alt=""
-                    className=" aspect-square w-32  object-fit-contain rounded-lg"
-                  />
+          {movieCast && (
+            <div className="flex gap-4 flex-wrap mx-auto justify-center py-8">
+              {Object.values(movieCast?.cast)
+                .slice(0, 16)
+                .map((person: any) => (
+                  <div className="flex flex-col w-max items-center max-w-[10rem]">
+                    <img
+                      src={`${IMAGE_BASE_URL}${person.profile_path}`}
+                      alt=""
+                      className=" aspect-square w-32  object-fit-contain rounded-lg"
+                    />
 
-                  <p className="text-center">
-                    <b>{person?.name}</b>
-                  </p>
+                    <p className="text-center hover:text-blue-800">
+                      <a
+                        target="_blank"
+                        href={`https://www.themoviedb.org/person/${person.id}`}
+                      >
+                        <b>{person?.name}</b>
+                      </a>
+                    </p>
 
-                  <p className="text-center">as {person?.character}</p>
-                </div>
-              ))}
-          </div>
+                    <p className="text-center">as {person.character}</p>
+                  </div>
+                ))}
+            </div>
+          )}
+
+          {Object.values(movieCast?.cast).length > 15 && (
+            <p className="text-xl text-center w-full text-gray-400 font-bold">
+              <a
+                href={`https://www.themoviedb.org/movie/${movieId}/cast`}
+                target="_blank"
+              >
+                View entire cast
+              </a>
+            </p>
+          )}
         </div>
         <div>
           <h3 className="font-bold md:text-xl lg:text-2xl capitalize">
             You may also like
           </h3>
-          <MultiCardSlider data={similarShows?.results} type={"tv"} />
+          <MultiCardSlider
+            data={similarMovies?.results?.filter(
+              (item: any) => item.backdrop_path != null
+            )}
+            type={"movie"}
+          />
         </div>
       </div>
     </>
   );
 };
 
-export default TvShow;
+export default Movie;

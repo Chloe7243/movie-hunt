@@ -92,13 +92,13 @@ export const api = createApi({
       }),
     }),
     searchMovie: builder.query({
-      query: (args: searchArgs) => ({
+      query: (args: searchArgs & { primary_release_year?: string }) => ({
         url: "search/movie",
         params: args,
       }),
     }),
     searchShow: builder.query({
-      query: (args: searchArgs) => ({
+      query: (args: searchArgs & { first_air_date_year?: string }) => ({
         url: "search/tv",
         params: args,
       }),

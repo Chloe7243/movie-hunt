@@ -1,10 +1,18 @@
 import cx from "clsx";
-import Card from "./UI/Card";
+import Card from "./Card";
 import { Link } from "react-router-dom";
-import { IMAGE_BASE_URL, MEDIA_LINKS } from "../utils/constants";
+import { IMAGE_BASE_URL, MEDIA_LINKS } from "../../utils/constants";
 import GenreName from "./GenreName";
 
-const Slide = ({ item, showType, type }: { item: any, showType?:boolean, type?:string }) => {
+const Slide = ({
+  item,
+  showType,
+  type,
+}: {
+  item: any;
+  showType?: boolean;
+  type?: string;
+}) => {
   const backdrop_path = `${IMAGE_BASE_URL}${item?.backdrop_path}`;
 
   return (
@@ -17,7 +25,7 @@ const Slide = ({ item, showType, type }: { item: any, showType?:boolean, type?:s
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundColor: "#00000099",
-        backgroundBlendMode: "overlay"
+        backgroundBlendMode: "overlay",
       }}
     >
       <div className="md:px-10 py-8 z-40">

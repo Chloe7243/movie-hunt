@@ -2,9 +2,9 @@ import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks/hooks";
 import { setGenres } from "../store/features/genreSlice";
 import { useGetMoviesGenresQuery, useGetTvGenresQuery } from "../store/api/api";
-import Loader from "./Loader";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Loader from "../components/UI/Loader";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();

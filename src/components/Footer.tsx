@@ -1,4 +1,4 @@
-import NavLinks from "./NavLinks";
+import NavLinks from "./UI/NavLinks";
 import { FaXTwitter, FaLinkedin, FaSquareGithub } from "react-icons/fa6";
 
 const Footer = () => {

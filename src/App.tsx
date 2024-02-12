@@ -1,21 +1,22 @@
 import store from "./store/store";
 import { Provider } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { useAppSelector } from "./store/hooks/hooks";
 
-import Home from "./components/Pages/Home";
-import Movie from "./components/Pages/Movie";
-import Movies from "./components/Pages/Movies";
-import TvShow from "./components/Pages/TvShow";
-import TvShows from "./components/Pages/TvShows";
+import Home from "./pages/Home";
+import Movie from "./pages/Movie";
+import Movies from "./pages/Movies";
+import TvShow from "./pages/TvShow";
+import TvShows from "./pages/TvShows";
 
-import Search from "./components/Pages/Search";
-import RootLayout from "./components/RootLayout";
-import Watchlist from "./components/Pages/Watchlist";
-import UserProfile from "./components/Pages/UserProfile";
+import Search from "./pages/Search";
+import Watchlist from "./pages/Watchlist";
+import UserProfile from "./pages/UserProfile";
+import RootLayout from "./layouts/RootLayout";
 
 import "./App.css";
-// import Login from "./components/Pages/Login";
-// import SignUp from "./components/Pages/SignUp";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (

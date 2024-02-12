@@ -5,12 +5,12 @@ import {
   useGetAiringTvQuery,
   useGetAllTrendingQuery,
   useGetUpcomingMoviesQuery,
-} from "../../store/api/api";
+} from "../store/api/api";
 
-import Slide from "../Slide";
-import Loader from "../Loader";
-import Category from "../UI/Category";
-import MultiCardSlider from "../MultiCardSlider";
+import Slide from "../components/UI/Slide";
+import Loader from "../components/UI/Loader";
+import Category from "../components/UI/Category";
+import MultiCardSlider from "../components/UI/MultiCardSlider";
 
 const Home = () => {
   const settings = {

@@ -28,7 +28,7 @@ const MultiCardSlider = ({ data, type }: { data: any; type?: string }) => {
     infinite: false,
     slidesToShow: 5,
     slidesToScroll: 5,
-    adaptiveHeight:true,
+    adaptiveHeight: true,
     responsive: [
       {
         breakpoint: 1024,
