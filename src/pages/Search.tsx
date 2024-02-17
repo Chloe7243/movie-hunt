@@ -72,7 +72,7 @@ const Search = () => {
   useEffect(() => {
     searchContent();
   }, [adultContent, mediaType, searchByYear, year]);
-  console.log({ data, year });
+
   return (
     <div className="mt-24 py-8 px-10 flex flex-col gap-10">
       <div>
