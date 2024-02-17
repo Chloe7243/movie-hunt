@@ -71,13 +71,13 @@ const Movie = () => {
         }}
       >
         <div className="md:px-10 px-6 py-8 z-40">
-          <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl leading-none font-extrabold max-h-[20rem]">
+          <h1 className="md:text-7xl 2xl:text-8xl sm:text-6xl text-4xl py-4  font-extrabold">
             {movieDetails?.title || movieDetails?.name}
           </h1>
-          <p className="font-didact_gothic mt-7 max-sm:text-base max-md:text-lg">
+          <p className="font-didact_gothic max-sm:text-base max-md:text-lg">
             {movieDetails?.tagline}
           </p>
-          <div className="mt-4 flex gap-4 flex-wrap overflow-scroll">
+          <div className="mt-6 flex gap-4 flex-wrap overflow-scroll">
             {movieDetails?.genres.map((genre: any, i: number) => (
               <GenreName key={i} id={genre.id} />
             ))}

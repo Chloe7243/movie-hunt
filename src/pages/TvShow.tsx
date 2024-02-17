@@ -66,7 +66,7 @@ const TvShow = () => {
         }}
       >
         <div className="md:px-10 px-6 py-8 z-40">
-          <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl leading-none font-extrabold overflow-y-hidden">
+          <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl font-extrabold overflow-y-hidden">
             {showDetails?.title || showDetails?.name}
           </h1>
           <p className="font-didact_gothic mt-7 max-sm:text-base max-md:text-lg">

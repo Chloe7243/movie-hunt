@@ -28,14 +28,14 @@ const Slide = ({
         backgroundBlendMode: "overlay",
       }}
     >
-      <div className="md:px-10 py-8 z-40">
-        <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl leading-none font-extrabold overflow-hidden max-w-[51rem]">
+      <div className="md:px-10 px-4 py-8 z-40">
+        <h1 className="md:text-7xl lg:text-8xl sm:text-6xl text-4xl py-4 font-extrabold max-w-[51rem] overflow-hidden">
           {item?.title || item?.name}
         </h1>
-        <p className="font-didact_gothic mt-7 line-clamp-3 w-full sm:w-1/2 lg:w-5/12 max-sm:text-base max-md:text-lg">
+        <p className="font-didact_gothic  line-clamp-3 w-full sm:w-1/2 lg:w-5/12 max-sm:text-base max-md:text-lg">
           {item?.overview}
         </p>
-        <div className="mt-4 flex gap-4 capitalize overflow-scroll">
+        <div className="mt-6 flex gap-4 capitalize flex-wrap">
           {showType && <Card>{item?.media_type}</Card>}
           {item.genre_ids.map((genre_id: number, i: number) => (
             <GenreName key={i} id={genre_id} />

@@ -85,8 +85,12 @@ input[type="radio"]:checked {
 
 .slick-track {
   display: flex;
-  align-items: flex-end;
   height: max-content;
+}
+
+.chakra-modal__content-container {
+  position: absolute;
+  z-index: 40;
 }
 
 /* .slick-track > div,
