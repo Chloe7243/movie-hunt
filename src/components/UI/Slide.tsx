@@ -37,9 +37,10 @@ const Slide = ({
         </p>
         <div className="mt-6 flex gap-4 capitalize flex-wrap">
           {showType && <Card>{item?.media_type}</Card>}
-          {item.genre_ids.map((genre_id: number, i: number) => (
-            <GenreName key={i} id={genre_id} />
-          ))}
+          {item.genre_ids.map(
+            (genre_id: number, i: number) =>
+              genre_id && <GenreName key={i} id={genre_id} />
+          )}
 
           <Card className="!bg-black/30 py-3 font-semibold text-white">
             <Link to={`/${MEDIA_LINKS[item?.media_type || type]}/${item?.id}`}>

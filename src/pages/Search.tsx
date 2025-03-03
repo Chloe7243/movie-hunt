@@ -75,7 +75,7 @@ const Search = () => {
   }, [adultContent, mediaType, searchByYear, year]);
 
   return (
-    <div className="mt-24 py-8 px-10 flex flex-col gap-10">
+    <div className="mt-24 py-8 lg:px-10 px-4 flex flex-col gap-10">
       <div>
         <div className="w-full flex mb-2">
           <input
