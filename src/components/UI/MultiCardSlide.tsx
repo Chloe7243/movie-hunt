@@ -13,9 +13,10 @@ const MultiCardSlide = ({
   type?: string;
   className?: string;
 }) => {
+  const [getGenreById] = useGetGenreById();
   const poster_path = `${IMAGE_BASE_URL}${item?.poster_path}`;
   const about = item?.genre_ids
-    ?.map((id: number) => useGetGenreById(id).name)
+    ?.map((id: number) => getGenreById(id)?.name)
     .join(", ");
   const kind = item?.media_type || type?.toLowerCase();
 
